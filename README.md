@@ -1,6 +1,6 @@
 OpenTabaServer
 ==============
 
-OpenTaba server code
+Welcome to the OpenTaba Server repo.
 
-Edited online
+contact at: agam.rafaeli@gmail.com
