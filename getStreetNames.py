@@ -1,12 +1,13 @@
 # -*- coding: UTF-8-*-
 
+#IMPORTS
 import re
 import urllib2
 import time
 
 """
-This file is a script that is supposed to get an array of streets
-    and their known building numbers
+This file is a script that is supposed to get the info
+    of cities, streets and building nums all over Israel
 """
 
 #CONSTANTS
@@ -14,6 +15,7 @@ GUSH_HELKA_CALCULATOR_URL = "http://www.gov.il/FirstGov/TopNav/OfficesAndAuthori
 GET_STREET_BY_CITY_ID_REQ = "http://www.gov.il/firstgov/services/MapiInformation.aspx/getStreets?cityNum="
 GET_STREET_NUMBERS_REQ = "http://www.gov.il/firstgov/services/MapiInformation.aspx/getNumbers?streetCode="
 
+#REGEXS
 STREET_ID_REGEX = '<street id=\"(\d+)\"><name>(.*?)</name></street>'
 CITY_ID_REGEX = '<option value=\"(\d+)\">(.*?)</option>'
 STREET_NUM_REGEX = '<number>(.*?)</number>'
@@ -40,6 +42,14 @@ def getStreetsByCity(city):
     return streetsArr
 
 def getBuildingNumsByStreet(street):
+    """
+    Gets an ID of a Street
+    Returns an array of all the building numbers of that street
+
+    Example:
+    getBuildingNumsByStreet(1567)
+    ['1','2','3-8']
+    """
     responseXML = urllib2.urlopen(GET_STREET_NUMBERS_REQ+str(street)).read()
     buildingNums = re.findall(STREET_NUM_REGEX,responseXML)
     return buildingNums

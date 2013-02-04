@@ -1,19 +1,17 @@
 # -*- coding: UTF-8-*-
 
-#HARD CODED TO WRITE TO DB THE JERUSALEM STREETS
-#DO NOT USE BEFORE UNDERSTANDING
-
 #IMPORTS
 import sqlite3, sys
 import getStreetNames
 
-if len(sys.argv) != 2:
-    print "Usage: %s <dbname>" % sys.argv[0]
-    sys.exit(1)
-
-db_name = sys.argv[1]
-
 def writeDB(cursor):
+    """
+    Gets a cursor of a DB.
+    Assumes the DB has the table that holds city, street, building num, gush, helka info
+
+     Writes into the DB all the information off the Tax website
+        of all the buildings in the country
+    """
     cities = getStreetNames.getCities()
     cityCounter = 0
     for city in cities:
@@ -32,9 +30,13 @@ def writeDB(cursor):
         cityCounter = cityCounter+1
         print "CITIES LEFT: "+str(len(cities)-cityCounter)
 
+#CHECK TO SEE THAT DB ADDRESS GIVEN
+if len(sys.argv) != 2:
+    print "Usage: %s <dbname>" % sys.argv[0]
+    sys.exit(1)
 
+db_name = sys.argv[1]
 conn = sqlite3.connect(db_name)
-
 writeDB(conn)
 conn.commit()
 conn.close()
