@@ -15,8 +15,9 @@ app = Flask(__name__)
 MONGO_URL = os.environ.get('MONGOHQ_URL')
 
 if MONGO_URL:    # on Heroku, get a connection
-    DB_NAME = "???"
+    DB_NAME = "dev.db"
     RUNNING_LOCAL = False
+    app.debug = True # since we're local, keep debug on
 else:            # work locally
     DB_NAME = "dev.db"
     RUNNING_LOCAL = True
