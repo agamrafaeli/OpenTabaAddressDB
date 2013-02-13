@@ -24,14 +24,12 @@ else:            # work locally
 
 def parseAddress(addr):
     rx = '[0-9\-]+'
-    print addr
     building_num = re.search(rx, addr).group(0)
     street = re.sub(rx, '', addr)
     return (u'ירושלים', unicode(street.strip()), unicode(building_num.strip()))
 
 def getGHFromDB(conn, city_name, street_name, building_num):
     rows = []
-    print city_name, street_name, building_num
     for row in conn.execute('''SELECT gush, helka    
                            FROM street_gush_helka
                            WHERE city_name = ? AND street_name = ? AND building_num = ? 
