@@ -15,7 +15,7 @@ def writeDB(cursor):
     """
     cities = getStreetNames.getCities()
     cityCounter = 0
-    for city in cities:
+    for city in [c for c in cities if c[0] == '3000']:
         print "STARTING ON CITY: "+ city[1].decode('utf-8')
         streets = getStreetNames.getStreetsByCity(city[0])
         streetCounter = 0
