@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: UTF-8-*-
 
 #IMPORTS
@@ -36,7 +37,9 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 db_name = sys.argv[1]
+
 conn = sqlite3.connect(db_name)
 writeDB(conn)
 conn.commit()
 conn.close()
+
