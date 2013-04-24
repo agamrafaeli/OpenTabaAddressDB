@@ -36,3 +36,4 @@ def writeStreetIDNumsToDB(streetID,streetName,DB):
     for num in buildingNums:
         house = createHouseDict('3000','ירושלים',streetID,streetName,num)
         DB.buildings.save(house)
+
