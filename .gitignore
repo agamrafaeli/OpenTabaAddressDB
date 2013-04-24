@@ -1,1 +1,7 @@
 *.db
+*.pyc
+*.rar
+.project
+.pydevproject
+.settings/*
+venv/*
