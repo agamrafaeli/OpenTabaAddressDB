@@ -2,20 +2,27 @@
 import pymongo
 import getStreetNames
 import codecs
-import re
+import re, os
+from urlparse import urlparse
 
-def getConnection(dbName):
-    connection = pymongo.MongoClient()
-    return connection[dbName]
+def getConnection():
+    MONGO_URL = os.environ.get('MONGOHQ_URL')
+    
+    if MONGO_URL:
+        conn = pymongo.Connection(MONGO_URL)
+        db = conn[urlparse(MONGOHQ_URL).path[1:]]
+    else:
+        conn = pymongo.Connection('localhost',27017)
+        db = conn['OpenTabaDB']
+    return db
 
-def writeStreetsToDB():
-    openTabaDB = getConnection("OpenTabaDB")
+def writeStreetsToDB(DB):
     streets = getStreetNames.getStreetsByCity(3000)
     for (streetId,streetName) in streets:
         streetDict = dict()
         streetDict['name'] = unicode(streetName)
         streetDict['id'] = unicode(streetId)
-        openTabaDB.streets.save(streetDict)
+        DB.streets.save(streetDict)
 
 def createHouseDict(cityID,cityName,streetID,streetName,buildingNum):
     house = dict()
@@ -36,4 +43,7 @@ def writeStreetIDNumsToDB(streetID,streetName,DB):
     for num in buildingNums:
         house = createHouseDict('3000','ירושלים',streetID,streetName,num)
         DB.buildings.save(house)
+
+db = getConnection()
+writeStreetsToDB(db)
 

@@ -7,7 +7,7 @@ import json
 import sqlite3
 import os
 import re
-import getGushHelka
+import getGushHelka, dbActions
 from getGushHelka import GetGushHelka
 
 app = Flask(__name__)
@@ -90,6 +90,10 @@ def getGushHelka():
         rows = getGHFromDB(conn, city_name, street_name, building_num)
     
     return json.dumps(rows)
+
+@app.route("/writeDB")
+def writeDB():
+    
 
 if __name__ == "__main__":
     app.debug = True
